@@ -18,17 +18,18 @@
 
 ## 📌 Overview
 
-Offline Argo CD / Flux CD GitOps controller manifest security auditor
+OArgoX is an offline, read-only auditor for GitOps controller manifests, covering Argo CD and Flux CD. Using a stdlib YAML-subset parser it reviews argocd config maps and secrets, AppProjects and Applications, plus Flux sources, Kustomizations, HelmReleases, Providers and Receivers. Secrets are masked, findings are mapped to CWE and MITRE ATT&CK, and results roll up into a 0–100 score and A+…F grade.
 
 ---
 
 ## ✨ Features
 
-- Stdlib YAML-subset parser — multi-document streams, maps / lists, flow collections, block scalars, lines
-- Argo CD — argocd-cm, argocd-rbac-cm, argocd-cmd-params-cm, argocd-secret, repo / cluster Secrets, AppProject, Application
-- Flux CD — Git/Helm/OCI sources, Kustomization, HelmRelease, Provider, Receiver, controller multi-tenancy lockdown flags
-- Secrets masked; CWE + MITRE ATT&CK; score + grade A+..F
-- Export TXT / MD / JSON / CSV / SARIF; --demo; --fail-on
+- Audits Argo CD argocd-cm / rbac-cm / cmd-params-cm, secrets, AppProject and Application
+- Audits Flux CD Git/Helm/OCI sources, Kustomization, HelmRelease, Provider and Receiver
+- Flags unverified sources, risky sync policy and multi-tenancy lockdown gaps
+- Secrets masked; CWE + MITRE ATT&CK mapping with remediation
+- Hardened manifest templates for Argo CD and Flux
+- Export TXT/MD/JSON/CSV/SARIF, self-test --demo and CI fail-on gates
 
 ---
 
@@ -42,7 +43,10 @@ Offline Argo CD / Flux CD GitOps controller manifest security auditor
 ## 🚀 Usage
 
 ```bash
-./OArgoX
+./OArgoX ./manifests/
+./OArgoX app.yaml --format sarif -o report.sarif --fail-on high
+./OArgoX --demo
+./OArgoX --help
 ```
 
 ---
